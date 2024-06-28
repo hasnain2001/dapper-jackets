@@ -62,7 +62,7 @@
                             @endphp
                             @if($images && is_array($images))
                                 @foreach ($images as $image)
-                                    <img src="{{ asset($image) }}" alt="Product Image" style="max-width: 60px;" class="stores shadow rounded-circle">
+                                    <img src="{{ asset($product->product_image) }}" alt="Product Image" style="max-width: 60px;" class="stores shadow rounded-circle">
                                 @endforeach
                             @else
                                 <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 60px;" class="stores shadow rounded-circle">

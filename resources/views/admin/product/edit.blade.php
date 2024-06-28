@@ -55,6 +55,14 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label for="description">Description</label>
+                                   
+                             <textarea name="description" id="description" class="form-control">{{ $product->description }}</textarea>
+                             @error('description')
+                             <span class="text-danger">{{ $message }}</span>
+                         @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="price">Price <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="price" value="{{ old('price', $product->price) }}" step="0.01" required>
                                     @error('price')
@@ -110,7 +118,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="meta_description">Meta Description</label>
-                                    <textarea name="meta_description" id="meta_description" class="form-control" cols="30" rows="5" style="resize: none;">{{ old('meta_description', $product->meta_description) }}</textarea>
+                                    <textarea name="meta_description" id="meta_description" class="form-control" cols="10" rows="2" style="resize: none;">{{ old('meta_description', $product->meta_description) }}</textarea>
                                     @error('meta_description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -135,7 +143,7 @@
                                 
                                 <div class="form-group">
                                     <label for="product_image">Product Image <span class="text-danger">*</span></label>
-                                    <input type="file" class="form-control" name="images[]" id="product_image" multiple>
+                                    <input type="file" class="form-control" name="productimage[]" id="product_image" multiple>
                                 
                                     @if($product->product_image)
                                         @foreach ($product as $image)

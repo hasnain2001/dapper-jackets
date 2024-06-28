@@ -27,6 +27,7 @@ class CategoriesController extends Controller
 
         Categories::create([
             'title' => $request->title,
+            'slug' => $request->slug,
             'meta_tag' => $request->meta_tag,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
@@ -55,6 +56,7 @@ class CategoriesController extends Controller
 
         $categories->update([
             'title' => $request->title,
+            'slug'=> $request->slug,
             'meta_tag' => $request->meta_tag,
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,

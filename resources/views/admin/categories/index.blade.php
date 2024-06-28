@@ -47,7 +47,7 @@
                                         @foreach ($categories as $category)
                                             <tr> <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $category->title }}</td>
-                                                <td><img class="btn-circle"  src="{{ asset('uploads/' . $category->category_image) }}"  style="max-width: 50px;"></td>
+                                                <td><img class="btn-circle"  src="{{ asset('uploads/categories/' . $category->category_image) }}"  style="max-width: 50px;"></td>
                                                 <td>
                                                     @if ($category->authentication == "No Auth")
                                                         <i class="fa fa-fw fa-times-circle"></i>

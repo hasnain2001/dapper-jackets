@@ -28,7 +28,7 @@ class ProductFactory extends Factory
         return [
             'name' => $name,
             'slug' => $slug,
-            'product_image' => $this->faker->imageUrl(),
+            'productimage' => $this->faker->imageUrl(),
             'price' => $this->faker->randomFloat(2, 1, 100),
             'quantity' => $this->faker->numberBetween(1, 100),
             'color' => $this->faker->colorName,

@@ -33,6 +33,10 @@
                                     <input type="text" class="form-control" name="title" id="title" value="{{ $categories->title }}" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="title">slug <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="slug" id="title" value="{{ $categories->title }}" required>
+                                </div>
+                                <div class="form-group">
                                     <label for="meta_tag">Meta Tag <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="meta_tag" id="meta_tag" value="{{ $categories->meta_tag }}" required>
                                 </div>

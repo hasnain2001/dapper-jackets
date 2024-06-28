@@ -42,43 +42,60 @@ class ProductController extends Controller
         return view('admin.product.create', compact('categories'));
     }
 
+    
     public function store(Request $request)
-    {
-    
-  
-       
-        $productImages = [];
-        
-        if($request->hasFile('images')) {
-            foreach($request->file('images') as $file) {
-                $image_name = md5(rand(1000, 10000));
-                $ext = strtolower($file->getClientOriginalExtension());
-                $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'uploads/product/';
-                $file->move($upload_path, $image_full_name);
-                $productImages[] = $upload_path . $image_full_name;
-            }
+{
+    // Validate the incoming request data
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'slug' => 'required|string|max:255|unique:products,slug',
+        'price' => 'required|numeric',
+        'quantity' => 'required|integer',
+        'color' => 'required|string|max:255',
+        'categories' => 'required|string|max:255',
+        'size' => 'required|string|max:255',
+        'title' => 'required|string|max:255',
+        'meta_tag' => 'nullable|string|max:255',
+        'meta_keyword' => 'nullable|string|max:255',
+        'meta_description' => 'nullable|string',
+        'status' => 'required|boolean',
+        'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validate each image file
+    ]);
+
+    $images = [];
+    if ($files = $request->file('productimage')) {
+        foreach ($files as $file) {
+            $image_name = md5(rand(1000, 10000));
+            $ext = strtolower($file->getClientOriginalExtension());
+            $image_full_name = $image_name . '.' . $ext;
+            $upload_path = 'upload/product/';
+            $image_url = $upload_path . $image_full_name;
+            $file->move($upload_path, $image_full_name);
+            $images[] = $image_url;
         }
-    
-        Product::create([
-            'name' => $request->name,
-            'slug' => $request->slug,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'color' => $request->color,
-            'categories' => $request->categories,
-              'size' => $request->size,
-            'title' => $request->title,
-            'meta_tag' => $request->meta_tag,
-            'meta_keyword' => $request->meta_keyword,
-            'meta_description' => $request->meta_description,
-            'status' => $request->status,
-            'authentication' => $request->authentication ?? "No Auth",
-            'product_image' => json_encode($productImages) ?? json_encode(["No Product Image"]),
-        ]);
-    
-        return redirect()->back()->with('success', 'Product Created Successfully');
     }
+
+    Product::create([
+        'name' => $request->name,
+        'slug' => $request->slug,
+        'price' => $request->price,
+        'quantity' => $request->quantity,
+        'color' => $request->color,
+        'categories' => $request->categories,
+        'size' => $request->size,
+        'title' => $request->title,
+        'meta_tag' => $request->meta_tag,
+        'meta_keyword' => $request->meta_keyword,
+        'meta_description' => $request->meta_description,
+        'status' => $request->status,
+        'authentication' => $request->authentication ?? "No Auth",
+        'productimage' => json_encode($images),
+    ]);
+
+    return redirect()->back()->with('success', 'Product Created Successfully');
+}
+
+    
     
     
     public function edit($id) {
@@ -136,7 +153,7 @@ if ($request->hasFile('images')) {
             'meta_description' => $request->meta_description,
             'status' => $request->status,
             'authentication' => $request->authentication ?? "No Auth",
-            'product_image' => json_encode($productImages),
+            'productimage' => json_encode($productImages),
         ]);
     
         return redirect()->back()->with('success', 'Product Updated Successfully');

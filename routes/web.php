@@ -70,7 +70,8 @@ Route::controller(BlogController::class)->prefix('dashboard')->group(function ()
 
    // Route for blog page
 
- 
+
+
 });
 
 
