@@ -39,26 +39,24 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
                         @php
-                        $images = json_decode($product->product_image);
-                    @endphp
-                    
-                    @if(is_array($images) && !empty($images))
-                        <img src="{{ asset($images[0]) }}" alt="Product Image" style="max-width: 80px;" class="stores shadow ">
-                    @else
-                        <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 600px;" class="stores shadow rounded-circle">
-                    @endif
-                    
+                            $images = json_decode($product->productimage);
+                        @endphp
+                        @if(is_array($images) && !empty($images))
+                            <img src="{{ asset($images[0]) }}" alt="Product Image" style="max-width: 100%;" class="stores shadow">
+                        @else
+                            <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 100%;" class="stores shadow rounded-circle">
+                        @endif
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
-                   
                         <p class="card-text"><strong>Price:</strong> ${{ $product->price }}</p>
                         <p class="card-text"><strong>Quantity:</strong> {{ $product->quantity }}</p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
-            @endforeach
+        @endforeach
+        
         </div>
     </div>
 

@@ -1,11 +1,14 @@
 @extends('admin.datatable_master')
 @section('title')
-    Create
+    Create Product
 @endsection
 <style>
-   
+    .form-group {
+        margin-bottom: 1rem;
+    }
 </style>
 @section('main-content')
+<div class="container">
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -25,99 +28,180 @@
                     <b>{{ session('success') }}</b>
                 </div>
             @endif
-            <form name="CreateStore" id="CreateStore" method="POST" enctype="multipart/form-data" action="{{ route('admin.store.store') }}">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name"> Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" id="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="slug">Slug <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="slug" id="name" required>
-                                </div>
-                                {{-- <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" id="description" class="form-control"></textarea>
-                                </div> --}}
-                              
-                                <div class="form-group">
-                                    <label form="price">Price   <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="price"  step="0.01" required>
-                                </div>
-                               
-                                <div class="form-group">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="number" class="form-control" name="quantity" value="{{ old('quantity', $product->quantity ?? '') }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Color</label>
-                                    <input type="color"  class="form-control" name="color[]" value="{{ old('color', $product->color ?? '') }}" placeholder="#000000">
-                                </div>
-                             
-                                <div class="form-group">
-                                   
-                                   <div class="form-group">
-    <label for="category">Category <span class="text-danger">*</span></label>
-    <select name="categories" id="category" class="form-control">
-        <option value="" disabled selected>--Select Category--</option>
-        @foreach($categories as $category) 
-            <option value="{{ $category->slug }}">{{ $category->slug }}</option>
-        @endforeach
-    </select>
-</div>
-
-                                </div>
-                               
-                            </div>
+                    <!-- Section 1: Basic Information -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Product Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                           <div class="form-group">
-    <label for="status">Status <span class="text-danger">*</span></label><br>
-    <input type="radio" name="status" id="enable" value="enable" required>&nbsp;<label for="enable">Enable</label>
-    <input type="radio" name="status" id="disable" value="disable">&nbsp;<label for="disable">Disable</label>
-</div>
-
-                          
-                          
-<div class="form-group">
-    <label for="productimage">Product Images:</label>
-    <input type="file" class="form-control-file" id="productimage" name="productimage[]" multiple>
-</div>
-
-                                <div class="form-group">
-                                    <label for="name">Meta Title<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="title" id="name" >
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_tag">Meta Tag <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="meta_tag" id="meta_tag">
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_keyword">Meta Keyword <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="meta_keyword" id="meta_keyword">
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_description">Meta Description</label>
-                                    <textarea name="meta_description" id="meta_description" class="form-control" cols="50" rows="2" style="resize: none;"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-lg">Save</button>
-                                    <a href="{{ route('admin.product') }}" class="btn btn-secondary">Cancel</a>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="slug">Slug:</label>
+                            <input type="text" class="form-control" id="slug" name="slug" required>
+                            @error('slug')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control"></textarea>
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                            @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                            @error('quantity')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category <span class="text-danger">*</span></label>
+                            <select name="categories" id="category" class="form-control">
+                                <option value="" disabled selected>--Select Category--</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->slug }}">{{ $category->slug }}</option>
+                                @endforeach
+                            </select>
+                            @error('categories')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                       
+                  
                     </div>
-             
-                </div>
-            </form>
+            
+                    
+                    <div class="col-md-4">
+                  
+                        <div class="form-group">
+                            <label for="sizes">Sizes:</label>
+                            <input type="text" class="form-control" id="sizes" name="sizes[]" placeholder="Enter size">
+                            <input type="text" class="form-control mt-2" name="sizes[]" placeholder="Enter size">
+                            <input type="text" class="form-control mt-2" name="sizes[]" placeholder="Enter size">
+                            @error('sizes')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Meta Title:</label>
+                            <input type="text" class="form-control" id="title" name="title">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_tag">Meta Tag:</label>
+                            <input type="text" class="form-control" id="meta_tag" name="meta_tag">
+                            @error('meta_tag')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_keyword">Meta Keyword:</label>
+                            <input type="text" class="form-control" id="meta_keyword" name="meta_keyword">
+                            @error('meta_keyword')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_description">Meta Description:</label>
+                            <textarea class="form-control" id="meta_description" name="meta_description"></textarea>
+                            @error('meta_description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status <span class="text-danger">*</span></label><br>
+                            <input type="radio" name="status" id="enable" value="enable" required>&nbsp;<label for="enable">Enable</label>
+                            <input type="radio" name="status" id="disable" value="disable">&nbsp;<label for="disable">Disable</label>
+                            @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    
+                     
+                    </div>
+            
+                    <!-- Section 3: Status and Images -->
+                    <div class="col-md-4">
+
+                        <div class="form-group">
+                            <label for="authentication">Authentication</label><br>
+                            <input type="checkbox" name="authentication" id="authentication" value="top_stores">&nbsp;<label for="authentication">Top Store</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="colors">Colors:</label>
+                            <input type="color" class="form-control" id="colors" name="color[]" placeholder="Enter color">
+                            <input type="color" class="form-control mt-2" name="color[]" placeholder="Enter color">
+                            <input type="color" class="form-control mt-2" name="color[]" placeholder="Enter color">
+                            @error('colors')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="productimage">Product Images:</label>
+                            <input type="file" class="form-control" id="productimage" name="productimage[]" multiple required onchange="previewImages(event)">
+                            <div id="imagePreviews" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>
+                        </div>
+                        
+                        <script>
+                            function previewImages(event) {
+                                const files = event.target.files;
+                                const previewsContainer = document.getElementById('imagePreviews');
+                                previewsContainer.innerHTML = ''; // Clear previous previews
+                        
+                                Array.from(files).forEach(file => {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        const img = document.createElement('img');
+                                        img.src = e.target.result;
+                                        img.style.maxWidth = '100px';
+                                        img.style.marginTop = '10px';
+                                        previewsContainer.appendChild(img);
+                                    };
+                                    reader.readAsDataURL(file);
+                                });
+                            }
+                        </script>
+                        
+                    
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{ route('admin.product') }}" class="btn btn-secondary">
+                               Cancel</a>
+
+                        </form>
+            
+            
         </div>
     </section>
-</div>
+
+
+</div></div>
+
+
 @endsection

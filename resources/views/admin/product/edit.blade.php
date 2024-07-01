@@ -41,7 +41,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Store Name <span class="text-danger">*</span></label>
+                                    <label for="name"> Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $product->name) }}" required>
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>

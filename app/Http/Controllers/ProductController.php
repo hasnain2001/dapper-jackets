@@ -44,56 +44,60 @@ class ProductController extends Controller
 
     
     public function store(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:products,slug',
-        'price' => 'required|numeric',
-        'quantity' => 'required|integer',
-        'color' => 'required|string|max:255',
-        'categories' => 'required|string|max:255',
-        'size' => 'required|string|max:255',
-        'title' => 'required|string|max:255',
-        'meta_tag' => 'nullable|string|max:255',
-        'meta_keyword' => 'nullable|string|max:255',
-        'meta_description' => 'nullable|string',
-        'status' => 'required|boolean',
-        'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validate each image file
-    ]);
-
-    $images = [];
-    if ($files = $request->file('productimage')) {
-        foreach ($files as $file) {
-            $image_name = md5(rand(1000, 10000));
-            $ext = strtolower($file->getClientOriginalExtension());
-            $image_full_name = $image_name . '.' . $ext;
-            $upload_path = 'upload/product/';
-            $image_url = $upload_path . $image_full_name;
-            $file->move($upload_path, $image_full_name);
-            $images[] = $image_url;
+    {
+      
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug',
+            'description' => 'required|string|max:10000',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'colors' => 'required|array',
+            'colors.*' => 'required|string|max:255',
+            'sizes' => 'required|array',
+            'sizes.*' => 'required|string|max:255',
+            'categories' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
+            'meta_tag' => 'nullable|string|max:255',
+            'meta_keyword' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'productimage.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' 
+        ]);
+    
+        $images = [];
+        if ($files = $request->file('productimage')) {
+            foreach ($files as $file) {
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+                $upload_path = 'upload/product/';
+                $image_url = $upload_path . $image_full_name;
+                $file->move($upload_path, $image_full_name);
+                $images[] = $image_url;
+            }
         }
+    
+        Product::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'color' => json_encode($request->colors),
+            'sizes' => json_encode($request->sizes),
+            'categories' => $request->categories,
+            'title' => $request->title,
+            'meta_tag' => $request->meta_tag,
+            'meta_keyword' => $request->meta_keyword,
+            'meta_description' => $request->meta_description,
+            'status' => $request->status,
+            'authentication' => $request->authentication ?? "No Auth",
+            'productimage' => json_encode($images),
+        ]);
+    
+        return redirect()->back()->with('success', 'Product Created Successfully');
     }
-
-    Product::create([
-        'name' => $request->name,
-        'slug' => $request->slug,
-        'price' => $request->price,
-        'quantity' => $request->quantity,
-        'color' => $request->color,
-        'categories' => $request->categories,
-        'size' => $request->size,
-        'title' => $request->title,
-        'meta_tag' => $request->meta_tag,
-        'meta_keyword' => $request->meta_keyword,
-        'meta_description' => $request->meta_description,
-        'status' => $request->status,
-        'authentication' => $request->authentication ?? "No Auth",
-        'productimage' => json_encode($images),
-    ]);
-
-    return redirect()->back()->with('success', 'Product Created Successfully');
-}
+    
 
     
     

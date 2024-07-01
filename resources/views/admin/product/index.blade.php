@@ -1,5 +1,5 @@
 @extends('admin.datatable_master')
-@section('title')
+@section('datatable-title')
     create
 @endsection
 @section('main-content')
@@ -37,14 +37,18 @@
                       <form id="bulk-delete-form" action="{{ route('admin.product.deleteSelected') }}" method="POST">
     @csrf
     <div class="table-responsive">
-        <table id="datatable-buttons" class="table table-striped dt-responsive  w-100">
+       
+        <table id="datatable-buttons" class="table table-centered mb-0">
             <thead>
                 <tr>
                     <th><input type="checkbox" id="select-all"></th>
                     <th scope="col">#</th>
                     <th>Product Name</th>
                     <th>Product Image</th>
+                    <th>category</th>
                     <th>Status</th>
+                    <th>Colors</th>
+
                     <th>Added</th>
                     <th>updated</th>
                     <th>Action</th>
@@ -56,22 +60,19 @@
                         <td><input type="checkbox" name="selected_stores[]" value="{{ $product->id }}"></td>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $product->name }}</td>
-                        <td>@if($product->product_image)
+                        <td>
                             @php
-                                $images = json_decode($product->product_image);
-                            @endphp
-                            @if($images && is_array($images))
-                                @foreach ($images as $image)
-                                    <img src="{{ asset($product->product_image) }}" alt="Product Image" style="max-width: 60px;" class="stores shadow rounded-circle">
-                                @endforeach
-                            @else
-                                <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 60px;" class="stores shadow rounded-circle">
-                            @endif
-                        @else
-                            <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 60px;" class="stores shadow rounded-circle">
+                            $images = json_decode($product->productimage, true);
+                        @endphp
+                        @if(is_array($images))
+                            @foreach($images as $image)
+                                <img src="{{ asset($image) }}" alt="{{ $product->name }}" style="width: 100px; height: auto;">
+                            @endforeach
                         @endif
+
                         
                         </td>
+                        <td> {{ $product->categories }}</td>
                         <td>
                              @if ($product->status == "disable")
             <i class="fas fa-times-circle text-danger"></i>
@@ -79,6 +80,17 @@
             <i class="fas fa-check-circle text-success"></i>
           @endif
                         </td>
+                        <td>
+                            @if($product->colors)
+                                @foreach(json_decode($product->colors) as $color)
+                                    {{ $color }}<br>
+                                @endforeach
+                            @else
+                                No colors available
+                            @endif
+                        </td>
+                        
+                        
                         <td>{{ $product->created_at }}</td>
                         <td>{{ $product->updated_at }}</td>
                         <td>

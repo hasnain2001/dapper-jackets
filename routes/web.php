@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 Route::controller(ProductController::class)->prefix('dashboard')->group(function () {
     Route::get('/product', 'index')->name('admin.product');
     Route::get('/product/create', 'create')->name('admin.product.create');
-    Route::post('/product/store', 'store')->name('admin.store.store');
+    Route::post('/product/store', 'store')->name('admin.product.store');
     Route::get('/product/edit/{id}', 'edit')->name('admin.product.edit');
     Route::post('/product/update/{id}', 'update')->name('admin.product.update');
     Route::get('/product/delete/{id}', 'destroy')->name('admin.product.delete');
