@@ -47,7 +47,8 @@
                     <th>Product Image</th>
                     <th>category</th>
                     <th>Status</th>
-                    <th>Colors</th>
+                    
+                    <th>Sizes</th>
 
                     <th>Added</th>
                     <th>updated</th>
@@ -55,60 +56,70 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($products as $product)
-                    <tr>
-                        <td><input type="checkbox" name="selected_stores[]" value="{{ $product->id }}"></td>
-                        <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $product->name }}</td>
-                        <td>
-                            @php
-                            $images = json_decode($product->productimage, true);
-                        @endphp
-                        @if(is_array($images))
-                            @foreach($images as $image)
-                                <img src="{{ asset($image) }}" alt="{{ $product->name }}" style="width: 100px; height: auto;">
-                            @endforeach
-                        @endif
-
+                @if (count($products) > 0)
+                    @foreach ($products as $product)
+                        <tr class="product-row">  <td>
+                                <input type="checkbox" name="selected_stores[]" value="{{ $product->id }}" class="product-checkbox">  </td>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td class="product-name">
+                                {{ $product->name }}
+                            </td>
+                            <td class="product-images">
+                                @php
+                                    $images = json_decode($product->productimage, true);
+                                @endphp
+                                @if (is_array($images))
+                                    @foreach ($images as $image)
+                                        <img src="{{ asset($image) }}" alt="{{ $product->name }}" class="product-image" style="width: 100px; height: auto;">
+                                    @endforeach
+                                @else
+                                    <p class="no-images">No images available.</p>
+                                @endif
+                            </td>
+                            <td class="product-categories">
+                                {{ $product->categories }}
+                            </td>
+                            <td class="product-status">
+                                @if ($product->status == "disable")
+                                    <i class="fas fa-times-circle text-danger"></i>
+                                @else
+                                    <i class="fas fa-check-circle text-success"></i>
+                                @endif
+                            </td>
                         
-                        </td>
-                        <td> {{ $product->categories }}</td>
-                        <td>
-                             @if ($product->status == "disable")
-            <i class="fas fa-times-circle text-danger"></i>
-          @else
-            <i class="fas fa-check-circle text-success"></i>
-          @endif
-                        </td>
-                        <td>
-                            @if($product->colors)
-                                @foreach(json_decode($product->colors) as $color)
-                                    {{ $color }}<br>
-                                @endforeach
-                            @else
-                                No colors available
-                            @endif
-                        </td>
-                        
-                        
-                        <td>{{ $product->created_at }}</td>
-                        <td>{{ $product->updated_at }}</td>
-                        <td>
-                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-info btn-sm">Edit</a>
-                            <a href="{{ route('admin.product.delete', $product->id) }}" onclick="return confirm('Are you sure you want to delete this!')" class="btn btn-danger btn-sm">Delete</a>
-                        </td>
-                    </tr>
-                @endforeach
+                            
+                            
+                            <td class="product-sizes">
+                        {{  $product->sizes }}
+                            </td>
+                            
+                            <td class="product-created-at">
+                                {{ $product->created_at }}
+                            </td>
+                            <td class="product-updated-at">
+                                {{ $product->updated_at }}
+                            </td>
+                            <td class="product-actions">
+                                <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-info btn-sm product-edit-btn">Edit</a>  <a href="{{ route('admin.product.delete', $product->id) }}" onclick="return confirm('Are you sure you want to delete this!')" class="btn btn-danger btn-sm product-delete-btn">Delete</a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <p class="no-products">No products available.</p>
+                @endif
             </tbody>
+            
+            
             <tfoot>
                 <tr>
-                    <th><input type="checkbox" id="select-all-footer"></th>
                     <th scope="col">#</th>
-                    <th>Product  Name</th>
-                    <th>Product  Image</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>
+                    <th>category</th>
                     <th>Status</th>
+                 
+                    <th>Sizes</th>
                     <th>Added</th>
-                    <th>Update</th>
+                    <th>updated</th>
                     <th>Action</th>
                 </tr>
             </tfoot>

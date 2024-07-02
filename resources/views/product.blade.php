@@ -31,13 +31,19 @@
     
 </head>
 <body>
-    <p class="h5 m-0">Total stores: <span class="fw-bold">{{ $products->total() }}</span></p>
+    <x-navbar/>
+    <br>
+    <br><br>
+    <br>
+    
+    <p class="h5 m-0">Total Product: <span class="fw-bold">{{ $products->total() }}</span></p>
     <div class="container">
         <div class="row">
             @foreach ($products as $product)
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
+                        
                         @php
                             $images = json_decode($product->productimage);
                         @endphp
@@ -49,9 +55,8 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text"><strong>Price:</strong> ${{ $product->price }}</p>
-                        <p class="card-text"><strong>Quantity:</strong> {{ $product->quantity }}</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                  
+                        <a href="{{ route('product_details', ['slug' => Str::slug($product->slug)]) }}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
@@ -66,5 +71,14 @@
             {{ $products->links('pagination::bootstrap-4') }} </div>
         </div>
       </div>
+
+
+      <script>
+        function clickimg(smallimg){
+            var fullimg=document.getElementById("imagebox")
+            fullimg. src = smallimg.src
+        }
+
+    </script>
 </body>
 </html>

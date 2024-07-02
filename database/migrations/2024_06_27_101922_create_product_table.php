@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->longText('description');
             $table->string('productimage')->nullable();
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
-            $table->string('color');
             $table->string('categories');
             $table->string('size')->nullable();
             $table->string('title')->nullable();

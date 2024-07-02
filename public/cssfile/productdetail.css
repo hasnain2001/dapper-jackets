@@ -1,0 +1,189 @@
+.card-header {
+    text-align: center;
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.card-text {
+    margin-bottom: 0.5rem;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Custom CSS for Product Detail Page */
+
+#product-images img {
+margin-bottom: 10px;
+}
+
+.product-image {
+max-width: 100%;
+height: auto;
+}
+
+.no-images {
+color: #999;
+font-style: italic;
+}
+
+.mb-3 {
+margin-bottom: 1.5rem;
+}
+
+.product-actions {
+margin-top: 1.5rem;
+}
+
+/* Media Query for Small Devices */
+@media (max-width: 576px) {
+.col-md-6 {
+margin-bottom: 20px; /* Adjust spacing for smaller screens */
+}
+}
+.container{
+width: 100%;
+}
+.wrapper{
+width: 90%;
+height: 100vh;
+margin: auto;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+}
+.text{
+flex-basis: 45%;
+}
+.all-images{
+height: 50vh;
+display: flex;
+}
+.small-images{
+display: flex;
+flex-direction: column;
+}
+.small-images img{
+height: 19vh;
+margin-bottom: 9px;
+cursor: pointer;
+opacity: 0.6;
+}
+.small-images img :hover{
+opacity: 1;
+
+}
+.main-images img{
+height: 100%;
+}
+p{
+margin-bottom: 20px;
+}
+.brand{
+background-color: #008000;
+width: fit-content;
+color: white;
+font-size: 12px 5px;
+}
+h2{
+font-size: 35px;
+color:  #555;
+margin-bottom: 20px;
+}
+.review{
+background-color: #008000;
+display: inline-block;
+color: white;
+padding: 4px;
+border-radius: 5px;
+font-size: 15px;     
+}
+.review .fa{
+color: white;
+}
+.price{
+color: rgba(29,28, 28, );
+font-size: 26px;
+font-weight: bold;
+padding-top: 10px;
+padding-right: 10px;
+}
+.price-box{
+display: flex;
+align-items: center;
+}
+input{
+width: 30px;
+border: 1px solid #ccc;
+font-weight: bold;
+text-align: center;
+}
+button{
+width: 140px;
+color: black;
+font-size: 15px;
+outline:none;
+border: 0;
+border-radius: 5px;
+padding: 10px 15px;
+box-sizing: border-box;
+cursor: pointer; 
+background-color: #fe980f;  
+} 
+button .fa {
+margin-right: 10px;
+}
+.buy{
+background-color: rgba(201, 97, 57, );
+}
+@media only screen and (max-width: 1200px){
+.wrapper{
+flex-direction: column;
+height: auto;
+padding: 5% o;
+
+}
+.text{
+padding-top: 50px;
+
+}
+}
+@media only screen and (max-width: 600px){
+.all-images{
+flex-direction: column;
+height: auto;
+
+}
+.small-images
+{
+flex-direction: row;
+justify-content: space-evenly;
+order: 1;
+}
+.price-box{
+width: 100%;
+
+}
+.main-images img{
+width: 100%;
+
+}
+.small-images img{
+width: 25%;
+
+}
+h2{
+font-size: 15px;
+
+}
+}
+.low-stock {
+    color: red;
+    font-weight: bold;
+}

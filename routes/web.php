@@ -18,12 +18,12 @@ Route::get('/dashboard', function () {
 
 
 Route::controller(HomeController::class)->group(function () {
-    // Route::get('/', 'index');
-    Route::get('/stores', 'stores')->name('stores');
-    Route::get('/stores/{slug}', 'StoreDetails')->name('store_details');
-    Route::get('/categories', 'categories')->name('categories');
-    Route::get('/categories/{title}', 'viewcategory')->name('related_category');
+    Route::get('/', 'index');
     Route::get('/products', 'product')->name('product.home');
+    Route::get('/product/{slug}', 'productdetail')->name('product_details');
+    Route::get('/categories', 'categories')->name('categories');
+    Route::get('/categories/{slug}', 'viewcategory')->name('category_details');
+
     Route::get('/blogs',  'blog_home')->name('blog');
 Route::get('/blogs/{slug}',  'blog_show')->name('blog-details');
   

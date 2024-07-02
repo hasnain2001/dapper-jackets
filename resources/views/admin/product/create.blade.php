@@ -77,9 +77,23 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                       
+                        <div class="form-group">
+                            <label for="size">Sizes:</label>
+                            <input type="text" class="form-control" id="sizes" name="sizes" placeholder="Enter size">
+                           
+                            @error('sizes')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                  
+                    </div>
+            
+                    
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="category">Category <span class="text-danger">*</span></label>
-                            <select name="categories" id="category" class="form-control">
+                            <select name="categories" id="category" class="form-control" required>
                                 <option value="" disabled selected>--Select Category--</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->slug }}">{{ $category->slug }}</option>
@@ -89,22 +103,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                       
+                        
                   
-                    </div>
-            
                     
-                    <div class="col-md-4">
-                  
-                        <div class="form-group">
-                            <label for="sizes">Sizes:</label>
-                            <input type="text" class="form-control" id="sizes" name="sizes[]" placeholder="Enter size">
-                            <input type="text" class="form-control mt-2" name="sizes[]" placeholder="Enter size">
-                            <input type="text" class="form-control mt-2" name="sizes[]" placeholder="Enter size">
-                            @error('sizes')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
                         <div class="form-group">
                             <label for="title">Meta Title:</label>
                             <input type="text" class="form-control" id="title" name="title">
@@ -119,6 +120,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                   
                         <div class="form-group">
                             <label for="meta_keyword">Meta Keyword:</label>
                             <input type="text" class="form-control" id="meta_keyword" name="meta_keyword">
@@ -133,60 +135,36 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label for="status">Status <span class="text-danger">*</span></label><br>
-                            <input type="radio" name="status" id="enable" value="enable" required>&nbsp;<label for="enable">Enable</label>
-                            <input type="radio" name="status" id="disable" value="disable">&nbsp;<label for="disable">Disable</label>
-                            @error('status')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                     
+                      
+                   
                     
                      
                     </div>
             
                     <!-- Section 3: Status and Images -->
                     <div class="col-md-4">
-
+                     
                         <div class="form-group">
                             <label for="authentication">Authentication</label><br>
                             <input type="checkbox" name="authentication" id="authentication" value="top_stores">&nbsp;<label for="authentication">Top Store</label>
                         </div>
                         <div class="form-group">
-                            <label for="colors">Colors:</label>
-                            <input type="color" class="form-control" id="colors" name="color[]" placeholder="Enter color">
-                            <input type="color" class="form-control mt-2" name="color[]" placeholder="Enter color">
-                            <input type="color" class="form-control mt-2" name="color[]" placeholder="Enter color">
-                            @error('colors')
+                            <label for="status">Status <span class="text-danger">*</span></label><br>
+                            <input type="radio" name="status" id="enable" value="enable" required >&nbsp;<label for="enable">Enable</label>
+                            <input type="radio" name="status" id="disable" value="disable" required>&nbsp;<label for="disable">Disable</label>
+                            @error('status')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                   
                         <div class="form-group">
                             <label for="productimage">Product Images:</label>
                             <input type="file" class="form-control" id="productimage" name="productimage[]" multiple required onchange="previewImages(event)">
                             <div id="imagePreviews" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>
                         </div>
                         
-                        <script>
-                            function previewImages(event) {
-                                const files = event.target.files;
-                                const previewsContainer = document.getElementById('imagePreviews');
-                                previewsContainer.innerHTML = ''; // Clear previous previews
-                        
-                                Array.from(files).forEach(file => {
-                                    const reader = new FileReader();
-                                    reader.onload = function(e) {
-                                        const img = document.createElement('img');
-                                        img.src = e.target.result;
-                                        img.style.maxWidth = '100px';
-                                        img.style.marginTop = '10px';
-                                        previewsContainer.appendChild(img);
-                                    };
-                                    reader.readAsDataURL(file);
-                                });
-                            }
-                        </script>
+                      
                         
                     
                         <div class="form-group">
@@ -202,6 +180,26 @@
 
 
 </div></div>
+
+<script>
+    function previewImages(event) {
+        const files = event.target.files;
+        const previewsContainer = document.getElementById('imagePreviews');
+        previewsContainer.innerHTML = ''; // Clear previous previews
+
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100px';
+                img.style.marginTop = '10px';
+                previewsContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+</script>
 
 
 @endsection

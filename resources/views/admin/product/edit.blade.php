@@ -37,140 +37,141 @@
                 @csrf
                 @method('POST')
                 <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name"> Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $product->name) }}" required>
-                                    @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="slug">Slug</label>
-                                    <textarea name="slug" id="slug" class="form-control" style="resize: none;" required>{{ old('slug', $product->slug) }}</textarea>
-                                    @error('slug')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                   
-                             <textarea name="description" id="description" class="form-control">{{ $product->description }}</textarea>
-                             @error('description')
-                             <span class="text-danger">{{ $message }}</span>
-                         @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="price">Price <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="price" value="{{ old('price', $product->price) }}" step="0.01" required>
-                                    @error('price')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="number" class="form-control" name="quantity" value="{{ old('quantity', $product->quantity) }}">
-                                    @error('quantity')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="color">Color</label>
-                                    <input type="color" class="form-control" name="color" value="{{ old('color', $product->color) }}">
-                                    @error('color')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="category">Category <span class="text-danger">*</span></label>
-                                    <select name="category" id="category" class="form-control">
-                                        <option value="" disabled selected>{{ $product->category }}</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->slug }}" {{ old('category', $product->category) == $category->slug ? 'selected' : '' }}>{{ $category->slug }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('category')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="title">Meta Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $product->title) }}">
-                                    @error('title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_tag">Meta Tag <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="meta_tag" id="meta_tag" value="{{ old('meta_tag', $product->meta_tag) }}">
-                                    @error('meta_tag')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_keyword">Meta Keyword <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="meta_keyword" id="meta_keyword" value="{{ old('meta_keyword', $product->meta_keyword) }}">
-                                    @error('meta_keyword')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="meta_description">Meta Description</label>
-                                    <textarea name="meta_description" id="meta_description" class="form-control" cols="10" rows="2" style="resize: none;">{{ old('meta_description', $product->meta_description) }}</textarea>
-                                    @error('meta_description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+                    <!-- Section 1: Basic Information -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Product Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $product->name) }}" required>
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="slug">Slug:</label>
+                            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug', $product->slug) }}" required>
+                            @error('slug')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control">{{ old('description', $product->description) }}</textarea>
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price" value="{{ old('price', $product->price) }}" required>
+                            @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity', $product->quantity) }}" required>
+                            @error('quantity')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="sizes">Sizes:</label>
+                            <input type="text" class="form-control" id="sizes" name="sizes" value="{{ old('sizes', $product->sizes) }}">
+                            @error('sizes')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="status">Status <span class="text-danger">*</span></label><br>
-                                    <input type="checkbox" name="status" id="status" value="1" {{ old('status', $product->status) ? 'checked' : '' }}>
-                                    <label for="status">Enable</label>
-                                    <br>
-                                    <input type="hidden" name="status" value="0"> <!-- Ensure there's a hidden input with value 0 for unchecked state -->
-                                    <label for="status">Disable</label>
-                                    @error('status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="product_image">Product Image <span class="text-danger">*</span></label>
-                                    <input type="file" class="form-control" name="productimage[]" id="product_image" multiple>
-                                
-                                    @if($product->product_image)
-                                        @foreach ($product as $image)
-                                            <input type="hidden" name="current_product_image[]" value="{{ $image }}">
-                                            <img src="{{ asset($image) }}" alt="Product Image" style="max-width: 60px;" class="stores shadow rounded-circle">
-                                        @endforeach
-                                    @else
-                                        <img src="{{ asset('front/assets/images/no-image-found.jpg') }}" alt="No Image" style="max-width: 60px;" class="stores shadow rounded-circle">
-                                        <input type="hidden" name="current_product_image[]" value="">
-                                    @endif
-                                
-                                    @error('product_image')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                            </div>
+            
+                    <!-- Section 2: Category and Meta Information -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="category">Category <span class="text-danger">*</span></label>
+                            <select name="categories" id="category" class="form-control" required>
+                                <option value="" disabled selected>--Select Category--</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->slug }}" {{ old('categories', $product->categories) == $category->slug ? 'selected' : '' }}>{{ $category->slug }}</option>
+                                @endforeach
+                            </select>
+                            @error('categories')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Meta Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $product->title) }}">
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_tag">Meta Tag:</label>
+                            <input type="text" class="form-control" id="meta_tag" name="meta_tag" value="{{ old('meta_tag', $product->meta_tag) }}">
+                            @error('meta_tag')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_keyword">Meta Keyword:</label>
+                            <input type="text" class="form-control" id="meta_keyword" name="meta_keyword" value="{{ old('meta_keyword', $product->meta_keyword) }}">
+                            @error('meta_keyword')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="meta_description">Meta Description:</label>
+                            <textarea class="form-control" id="meta_description" name="meta_description">{{ old('meta_description', $product->meta_description) }}</textarea>
+                            @error('meta_description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
+            
+                    <!-- Section 3: Status and Images -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="status">Status <span class="text-danger">*</span></label><br>
+                            <input type="radio" name="status" id="enable" {{ $product->status == 'enable' ? 'checked' : '' }} value="enable">&nbsp;<label for="enable">Enable</label>
+                            <input type="radio" name="status" id="disable" {{ $product->status == 'disable' ? 'checked' : '' }} value="disable">&nbsp;<label for="disable">Disable</label>
+
+                            @error('status')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="authentication">Authentication</label><br>
+                            <input type="checkbox" name="authentication" id="authentication" {{ $product->authentication == 'top_stores' ? 'checked' : '' }} value="top_stores">&nbsp;<label for="authentication">Top Store</label>
+                            
+                            @error('authentication')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="productimage">Product Images:</label>
+                            <input type="file" class="form-control" id="productimage" name="productimage[]" multiple onchange="previewImages(event)">
+                            <div id="imagePreviews" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                                @if($product->productimage)
+                                    @foreach (json_decode($product->productimage) as $image)
+                                        <div style="position: relative;">
+                                            <img src="{{ asset($image) }}" alt="Product Image" style="max-width: 60px;">
+                                            <input type="hidden" name="current_productimage[]" value="{{ $image }}">
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            @error('productimage')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+            
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{ route('admin.product') }}" class="btn btn-secondary">Cancel</a>
-                        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">Add New</a>
                     </div>
                 </div>
             </form>
-        </div>
+                    </div>
     </section>
 </div>
 @endsection
